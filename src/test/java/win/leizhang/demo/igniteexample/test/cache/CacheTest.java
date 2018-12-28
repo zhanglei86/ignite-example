@@ -5,8 +5,6 @@ import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.transactions.Transaction;
 
-import java.util.concurrent.locks.Lock;
-
 
 /**
  * Created by zealous on 2018/12/27.
@@ -14,9 +12,8 @@ import java.util.concurrent.locks.Lock;
 public class CacheTest {
 
     public static void main(String[] args) {
-        testPut();
+        //testPut();
         //testAtomOpt();
-        testLock();
     }
 
     private static void testPut() {
@@ -53,21 +50,6 @@ public class CacheTest {
                 }
                 cache.put("World", 22);
                 tx.commit();
-            }
-        }
-    }
-
-    private static void testLock() {
-        try (Ignite ignite = Ignition.start("spring/example-cache.xml")) {
-            IgniteCache<String, Integer> cache = ignite.getOrCreateCache("myCacheName");
-            // Lock cache key "Hello".
-            Lock lock = cache.lock("Hello");
-            lock.lock();
-            try {
-                cache.put("Hello", 11);
-                cache.put("World", 22);
-            } finally {
-                lock.unlock();
             }
         }
     }

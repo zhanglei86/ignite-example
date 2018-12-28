@@ -82,7 +82,7 @@ public final class SpringBeanExample {
             System.out.println(">>>");
         } finally {
             // Stop local cluster node.
-            ctx.destroy();
+            //ctx.destroy();
         }
     }
 }
