@@ -45,6 +45,18 @@
                     <property name="atomicityMode" value="ATOMIC"/>
                     <property name="backups" value="1"/>
                     <property name="cacheMode" value="PARTITIONED"/>
+
+                    <!--<property name="eagerTtl" value="true"/>-->
+                    <property name="expiryPolicyFactory">
+                        <bean class="javax.cache.expiry.CreatedExpiryPolicy" factory-method="factoryOf">
+                            <constructor-arg>
+                                <bean class="javax.cache.expiry.Duration">
+                                    <constructor-arg value="MINUTES"/>
+                                    <constructor-arg value="2"/>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </property>
                 </bean>
             </list>
         </property>
