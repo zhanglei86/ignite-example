@@ -21,10 +21,9 @@ public class IgniteCacheConfig {
     @Bean
     public IgniteCache<Object, Object> instance() {
         Ignite ignite = Ignition.start("spring/example-cache.xml");
-        ExpiryPolicy exPolicy = new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 50));
-        IgniteCache<Object, Object> cache = ignite.getOrCreateCache("myCacheName").withExpiryPolicy(exPolicy);
+        //ExpiryPolicy exPolicy = new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 50));
+        IgniteCache<Object, Object> cache = ignite.getOrCreateCache("myCacheName");//.withExpiryPolicy(exPolicy);
 
-        IgniteCache<Object, Object> cache2;
         return cache;
     }
 }

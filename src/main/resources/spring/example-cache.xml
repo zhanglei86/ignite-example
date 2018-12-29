@@ -52,7 +52,7 @@
                             <constructor-arg>
                                 <bean class="javax.cache.expiry.Duration">
                                     <constructor-arg value="MINUTES"/>
-                                    <constructor-arg value="2"/>
+                                    <constructor-arg value="1"/>
                                 </bean>
                             </constructor-arg>
                         </bean>

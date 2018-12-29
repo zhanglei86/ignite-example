@@ -5,6 +5,11 @@ import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.transactions.Transaction;
 
+import javax.cache.expiry.CreatedExpiryPolicy;
+import javax.cache.expiry.Duration;
+import javax.cache.expiry.ExpiryPolicy;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * Created by zealous on 2018/12/27.
@@ -19,7 +24,8 @@ public class CacheTest {
 
     private static void testPutAndGet() {
         Ignite ignite = Ignition.start("spring/example-cache.xml");
-        IgniteCache<String, String> cache = ignite.cache("myCacheName");
+        ExpiryPolicy exPolicy = new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 40));
+        IgniteCache<Object, Object> cache = ignite.cache("myCacheName").withExpiryPolicy(exPolicy);
 
         // Store keys in cache (values will end up on different cache nodes).
         for (int i = 0; i < 10; i++) {
