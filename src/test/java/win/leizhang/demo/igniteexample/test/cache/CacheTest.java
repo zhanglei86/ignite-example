@@ -12,20 +12,30 @@ import org.apache.ignite.transactions.Transaction;
 public class CacheTest {
 
     public static void main(String[] args) {
-        //testPut();
+        testPutAndGet();
+        //testGet();
         //testAtomOpt();
     }
 
-    private static void testPut() {
-        try (Ignite ignite = Ignition.start("spring/example-cache.xml")) {
-            IgniteCache<String, String> cache = ignite.getOrCreateCache("myCacheName");
+    private static void testPutAndGet() {
+        Ignite ignite = Ignition.start("spring/example-cache.xml");
+        IgniteCache<String, String> cache = ignite.cache("myCacheName");
 
-            // Store keys in cache (values will end up on different cache nodes).
-            for (int i = 0; i < 10; i++)
-                cache.put(String.valueOf(i), Integer.toString(i));
+        // Store keys in cache (values will end up on different cache nodes).
+        for (int i = 0; i < 10; i++) {
+            cache.put(String.valueOf(i), Integer.toString(i));
+        }
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Got [key=" + i + ", val=" + cache.get(String.valueOf(i)) + ']');
+        }
+    }
 
-            for (int i = 0; i < 10; i++)
-                System.out.println("Got [key=" + i + ", val=" + cache.get(String.valueOf(i)) + ']');
+    private static void testGet() {
+        Ignite ignite = Ignition.start("spring/example-cache.xml");
+        IgniteCache<String, String> cache = ignite.cache("myCacheName");
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Got [key=" + i + ", val=" + cache.get(String.valueOf(i)) + ']');
         }
     }
 
@@ -39,6 +49,7 @@ public class CacheTest {
 
             oldVal = cache.getAndReplace("Hello", 11);
             success = cache.replace("World", 22);
+
             success = cache.replace("World", 2, 22);
             success = cache.remove("Hello", 1);
 
