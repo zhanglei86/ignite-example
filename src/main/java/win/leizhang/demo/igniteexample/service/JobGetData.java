@@ -11,24 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class JobGetData {
 
-    private static final long START = System.currentTimeMillis();
-    /*private static IgniteCache<Object, Object> cache;
-
-    static {
-        Ignite ignite = Ignition.start("spring/example-cache.xml");
-
-        IgniteConfiguration obj = ignite.configuration();
-        CacheConfiguration[] obj2 = obj.getCacheConfiguration();
-
-        cache = ignite.getOrCreateCache("myCacheName");
-    }*/
-
     @Autowired
     private IgniteCache<Object, Object> cache;
 
+    private static final long START = System.currentTimeMillis();
+
     @Scheduled(cron = "1/5 * * * * ?")
     public void testGet() {
-
         for (int i = 0; i < 10; i++) {
             System.out.println("Got [key=" + i + ", val=" + cache.get(String.valueOf(i)) + ']');
         }
@@ -38,7 +27,7 @@ public class JobGetData {
         for (int i = 30; i < 35; i++) {
             System.out.println("Got [key=" + i + ", val=" + cache.get(String.valueOf(i)) + ']');
         }
-        System.err.println("elapsedTime ==>" + (System.currentTimeMillis() - START) / 1000);
+        System.out.println("elapsedTime ==>" + (System.currentTimeMillis() - START) / 1000);
         System.out.println("========");
     }
 
