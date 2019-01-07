@@ -51,8 +51,8 @@
                         <bean class="javax.cache.expiry.CreatedExpiryPolicy" factory-method="factoryOf">
                             <constructor-arg>
                                 <bean class="javax.cache.expiry.Duration">
-                                    <constructor-arg value="MINUTES"/>
-                                    <constructor-arg value="1"/>
+                                    <constructor-arg value="SECONDS"/>
+                                    <constructor-arg value="40"/>
                                 </bean>
                             </constructor-arg>
                         </bean>
