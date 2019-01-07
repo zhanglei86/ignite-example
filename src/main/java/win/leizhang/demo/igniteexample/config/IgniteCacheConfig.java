@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 public class IgniteCacheConfig {
 
     @Bean
-    public IgniteCache<Object, Object> instance() {
+    public <K, V> IgniteCache<K, V> instance() {
         Ignite ignite = Ignition.start("spring/example-cache.xml");
-        IgniteCache<Object, Object> cache = ignite.getOrCreateCache("myCacheName");
+        IgniteCache<K, V> cache = ignite.getOrCreateCache("myCacheName");
         return cache;
     }
 }
