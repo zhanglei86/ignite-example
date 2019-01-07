@@ -52,6 +52,11 @@
             <artifactId>ignite-indexing</artifactId>
             <version>${ignite.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.ignite</groupId>
+            <artifactId>ignite-rest-http</artifactId>
+            <version>${ignite.version}</version>
+        </dependency>
 
     </dependencies>
 

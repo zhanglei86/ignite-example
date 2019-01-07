@@ -39,23 +39,17 @@ public class IgController {
     public String testPut2() {
         ExpiryPolicy exPolicy = new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 50));
         IgniteCache<Object, Object> cache = ig.withExpiryPolicy(exPolicy);
-
         for (int i = 20; i < 25; i++) {
             cache.put(String.valueOf(i), Integer.toString(i));
         }
 
-        return "put1 20-25";
-    }
-
-    @PostMapping("put3")
-    public String testPut3() {
-        ExpiryPolicy exPolicy = new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 70));
-        IgniteCache<Object, Object> cache = ig.withExpiryPolicy(exPolicy);
-
+        ExpiryPolicy exPolicy2 = new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 70));
+        IgniteCache<Object, Object> cache2 = ig.withExpiryPolicy(exPolicy2);
         for (int i = 30; i < 35; i++) {
-            cache.put(String.valueOf(i), Integer.toString(i));
+            cache2.put(String.valueOf(i), Integer.toString(i));
         }
 
-        return "put1 30-35";
+        return "put1 20-25 And 30-35";
     }
+
 }
