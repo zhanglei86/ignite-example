@@ -58,8 +58,19 @@
                         </bean>
                     </property>
                 </bean>
+
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="myLock"/>
+                    <property name="atomicityMode" value="TRANSACTIONAL"/>
+                    <!--<property name="backups" value="1"/>
+                    <property name="cacheMode" value="PARTITIONED"/>-->
+                </bean>
+
             </list>
         </property>
+
+        <property name="transactionConfiguration" ref="txnConf"/>
+
 
         <!-- Explicitly configure TCP discovery SPI to provide list of initial nodes. -->
         <property name="discoverySpi">
@@ -84,4 +95,9 @@
             </bean>
         </property>
     </bean>
+
+    <bean id="txnConf" class="org.apache.ignite.configuration.TransactionConfiguration">
+        <property name="defaultTxTimeout" value="60000"/>
+    </bean>
+
 </beans>

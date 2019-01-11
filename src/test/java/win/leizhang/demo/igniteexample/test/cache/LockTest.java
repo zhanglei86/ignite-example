@@ -8,6 +8,7 @@ import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.IgniteConfiguration;
 import org.apache.ignite.configuration.TransactionConfiguration;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -16,7 +17,35 @@ import java.util.concurrent.locks.Lock;
 public class LockTest {
 
     public static void main(String[] args) {
-        testLock();
+        testIsLocked();
+        //testLock1();
+    }
+
+    private static void testLock1() {
+        Ignite ig = Ignition.start("spring/example-cache.xml");
+        IgniteCache<String, Integer> cache = ig.getOrCreateCache("myLock");
+        Lock lock = cache.lock("lockKey");
+
+        try {
+            lock.tryLock(300, TimeUnit.SECONDS);
+            // logic
+            System.out.println("拿到锁了，开始操作");
+            TimeUnit.MINUTES.sleep(1);
+
+            System.out.println("完成，准备解锁！");
+        } catch (InterruptedException ite) {
+            ite.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private static void testIsLocked() {
+        Ignite ig = Ignition.start("spring/example-cache.xml");
+        IgniteCache<String, Integer> cache = ig.getOrCreateCache("myLock");
+        boolean flag = cache.isLocalLocked("lockKey", true);
+        System.out.println("当前锁状态是" + flag);
+        ig.close();
     }
 
     private static void testLock() {
