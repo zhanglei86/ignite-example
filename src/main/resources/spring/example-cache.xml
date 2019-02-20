@@ -66,6 +66,25 @@
                     <property name="cacheMode" value="PARTITIONED"/>-->
                 </bean>
 
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="evtCache"/>
+                    <property name="cacheMode" value="PARTITIONED"/>
+                    <property name="backups" value="1"/>
+                    <property name="writeSynchronizationMode" value="FULL_SYNC"/>
+
+                    <property name="atomicityMode" value="TRANSACTIONAL"/>
+                    <property name="expiryPolicyFactory">
+                        <bean class="javax.cache.expiry.CreatedExpiryPolicy" factory-method="factoryOf">
+                            <constructor-arg>
+                                <bean class="javax.cache.expiry.Duration">
+                                    <constructor-arg value="SECONDS"/>
+                                    <constructor-arg value="60"/>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </property>
+                </bean>
+
             </list>
         </property>
 

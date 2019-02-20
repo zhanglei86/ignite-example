@@ -17,8 +17,8 @@ import java.util.concurrent.locks.Lock;
 public class LockTest {
 
     public static void main(String[] args) {
-        testIsLocked();
-        //testLock1();
+        //testIsLocked();
+        testLock1();
     }
 
     private static void testLock1() {
@@ -26,18 +26,27 @@ public class LockTest {
         IgniteCache<String, Integer> cache = ig.getOrCreateCache("myLock");
         Lock lock = cache.lock("lockKey");
 
+        boolean flag1 = cache.isLocalLocked("lockKey", true);
+        System.out.println("1" + flag1);
+
         try {
             lock.tryLock(300, TimeUnit.SECONDS);
             // logic
             System.out.println("拿到锁了，开始操作");
-            TimeUnit.MINUTES.sleep(1);
+            boolean flag2 = cache.isLocalLocked("lockKey", true);
+            System.out.println("2" + flag2);
 
+            TimeUnit.MINUTES.sleep(1);
             System.out.println("完成，准备解锁！");
         } catch (InterruptedException ite) {
             ite.printStackTrace();
         } finally {
             lock.unlock();
         }
+
+        boolean flag3 = cache.isLocalLocked("lockKey", true);
+        System.out.println("3" + flag3);
+
     }
 
     private static void testIsLocked() {
