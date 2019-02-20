@@ -21,7 +21,7 @@ public class EvtNode2Test {
     private static final Logger log = LoggerFactory.getLogger(EvtNode2Test.class);
 
     private static final DateTimeFormatter DEFAULT_FORMATTER_LDT_A1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss-SSS");
-    private static final ExpiryPolicy exPolicy = new ModifiedExpiryPolicy(new Duration(TimeUnit.SECONDS, 40));
+    private static final ExpiryPolicy exPolicy = new ModifiedExpiryPolicy(new Duration(TimeUnit.SECONDS, 30));
 
     public static void main(String[] args) {
         producer();

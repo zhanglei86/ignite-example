@@ -7,6 +7,9 @@ import org.apache.ignite.Ignition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.cache.expiry.AccessedExpiryPolicy;
+import javax.cache.expiry.Duration;
+import javax.cache.expiry.ExpiryPolicy;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -21,8 +24,11 @@ public class EvtNode1Test {
     }
 
     private static void consummer() {
+        // 热点更新的策略要配置在消费端
+        ExpiryPolicy exPolicy = new AccessedExpiryPolicy(new Duration(TimeUnit.SECONDS, 5));
+
         Ignite ignite = Ignition.start("spring/example-cache.xml");
-        IgniteCache<Object, Object> cache = ignite.getOrCreateCache("evtCache");
+        IgniteCache<Object, Object> cache = ignite.getOrCreateCache("evtCache").withExpiryPolicy(exPolicy);
 
         Object obj;
         int i = 1;
